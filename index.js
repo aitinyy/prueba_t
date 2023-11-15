@@ -20,6 +20,9 @@ restService.post("/echo", function(req, res) {
     req.body.queryResult.parameters.echoText
       ? req.body.queryResult.parameters.echoText
       : "Seems like some problem. Speak again."+req.body;
+
+  var speech = 'Vamos a hacer tu rutina';
+  
   return res.json({
 
   "fulfillmentText": speech,
