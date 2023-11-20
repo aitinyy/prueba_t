@@ -25,9 +25,10 @@ restService.post("/echo", function(req, res) {
   var speech = 'Hola';
 
   if(req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.startRoutine){
+    //empezamos la rutina
     speech = 'Vamos a empezar tu rutina';
   }else{
-    speech = 'Girl we got a problem';
+    speech = '¿Disculpa?';
   }
 
   return res.json({
@@ -35,6 +36,9 @@ restService.post("/echo", function(req, res) {
   "fulfillmentText": speech,
   "fulfillmentMessages": [
     {
+      "text": {
+        "text": [speech]
+      },
       "text": {
         "text": [speech]
       }
