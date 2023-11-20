@@ -41,9 +41,9 @@ restService.post("/echo", function(req, res) {
       }
     },{
       "followupEventInput": {
-        "name": "CLEANSER_START"
-        /*"languageCode": "en-US",
-        "parameters": {
+        "name": "CLEANSER_START",
+        "languageCode": "es-ES"
+        /*"parameters": {
           "param-name": "param-value"
         }*/
       }
