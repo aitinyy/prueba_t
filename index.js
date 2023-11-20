@@ -38,9 +38,18 @@ restService.post("/echo", function(req, res) {
   "fulfillmentMessages": [
     {
       "text": {
-        "text": [speech, speech2]
+        "text": [speech]
+      }
+    },{
+      "followupEventInput": {
+        "name": "CLEANSER_START"
+        /*"languageCode": "en-US",
+        "parameters": {
+          "param-name": "param-value"
+        }*/
       }
     }
+    
   ],
   "source": "<webhookpn1>"
 
