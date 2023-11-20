@@ -26,7 +26,8 @@ restService.post("/echo", function(req, res) {
 
   if(req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.startRoutine){
     //empezamos la rutina
-    speech = 'Vamos a empezar tu rutina';
+    speech = 'Vamos a empezar tu rutina.';
+    speech2 = '¿Quieres utilizar limpiador?';
   }else{
     speech = '¿Disculpa?';
   }
@@ -38,9 +39,11 @@ restService.post("/echo", function(req, res) {
     {
       "text": {
         "text": [speech]
-      },
+      }
+    },
+    {
       "text": {
-        "text": [speech]
+        "text": [speech2]
       }
     }
   ],
