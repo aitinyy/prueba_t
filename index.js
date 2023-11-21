@@ -70,8 +70,8 @@ restService.post("/echo", function(req, res) {
         ], 
         "payload": {
           "telegram": {
-            "text": "El *acné hormonal* está relacionado con los cambios en los niveles de hormonas. Puede aparecer en distintas etapas de la vida como la adolescencia, la menstruación, durante un embarzo o en la menopausa.",
-            "parse_mode": "Markdown"
+            "text": "<b>hello formatted custom telegram text</b>",
+            "parse_mode": "html"
           }
         },
         "source": "<webhookpn1>"
