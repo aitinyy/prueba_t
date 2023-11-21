@@ -23,35 +23,61 @@ restService.post("/echo", function(req, res) {
       */
 
   var speech = 'Hola';
+  var evento = '';
 
-  if(req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.startRoutine){
-    //empezamos la rutina
-    speech = 'Vamos a empezar tu rutina.';
-  }else{
-    speech = '¿Disculpa?';
+  if(req.body.queryResult && req.body.queryResult.parameters){
+    if(req.body.queryResult.parameters.startRoutine){
+      //empezamos la rutina
+      speech = 'Vamos a empezar tu rutina.';
+      evento = "CLEANSER_START";
+      return res.json({
+
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],
+        "followupEventInput": {
+            "name": evento,
+            "languageCode": "es-ES"
+            /*"parameters": {
+              "param-name": "param-value"
+            }*/
+        },
+        "source": "<webhookpn1>"
+      
+      
+        });
+    }else if(req.body.queryResult.parameters.removeMakeup){
+      //evento = "REMOVE_MAKEUP";
+      speech = 'quitamos maquillaje';
+
+      return res.json({
+
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],
+        "source": "<webhookpn1>"
+        });
+      //
+    }
+    else{
+      speech = '¿Disculpa?';
+    }
+
   }
 
-  return res.json({
-
-  "fulfillmentText": speech,
-  "fulfillmentMessages": [
-    {
-      "text": {
-        "text": [speech]
-      }
-    }
-  ],
-  "followupEventInput": {
-      "name": "CLEANSER_START",
-      "languageCode": "es-ES"
-      /*"parameters": {
-        "param-name": "param-value"
-      }*/
-  },
-  "source": "<webhookpn1>"
+  
 
 
-  });
 });
 
 
