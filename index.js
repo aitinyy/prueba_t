@@ -68,6 +68,12 @@ restService.post("/echo", function(req, res) {
             }
           }
         ],  
+        
+          "telegram": {
+            "text": "El *acné hormonal* está relacionado con los cambios en los niveles de hormonas. Puede aparecer en distintas etapas de la vida como la adolescencia, la menstruación, durante un embarzo o en la menopausa.",
+            "parse_mode": "Markdown"
+          }
+        ,
         "source": "<webhookpn1>"
         });
       //
