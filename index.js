@@ -63,17 +63,15 @@ restService.post("/echo", function(req, res) {
         "fulfillmentText": '',
         "fulfillmentMessages": [
           {
-            "text": {
-              "text": ['']
-            }
+            "payload": {
+              "telegram": {
+                "parse_mode": "Markdown",
+                "text": "hola mira *hola*"
+              }
+            },
+            "platform": "TELEGRAM"
           }
-        ], 
-        "payload": {
-          "telegram": {
-            "text": "<b>hello formatted custom telegram text</b>",
-            "parse_mode": "html"
-          }
-        },
+        ],
         "source": "<webhookpn1>"
         });
       //
