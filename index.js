@@ -52,7 +52,26 @@ restService.post("/echo", function(req, res) {
       
         });
     }else if(req.body.queryResult.parameters.removeMakeup){
-      //evento = "REMOVE_MAKEUP";
+      var statusWash = req.body.queryResult.parameters.removeMakeup;
+      if(statusWash=='removeMakeup')
+        speech = 'quitamos maquillaje';
+      else
+        speech = 'lavamos la cara';
+
+      return res.json({
+
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],  
+        "source": "<webhookpn1>"
+        });
+      //
+    }else if(req.body.queryResult.parameters.limpiar){
       speech = 'quitamos maquillaje';
 
       return res.json({
@@ -64,7 +83,7 @@ restService.post("/echo", function(req, res) {
               "text": [speech]
             }
           }
-        ],
+        ],  
         "source": "<webhookpn1>"
         });
       //
