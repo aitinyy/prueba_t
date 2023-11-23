@@ -99,7 +99,7 @@ restService.post("/echo", function(req, res) {
         });
       //
     }else if(req.body.queryResult.parameters.skinConcern){
-      speech = 'la preocupacion es ';
+      speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
 
       return res.json({
         "fulfillmentText": speech,
