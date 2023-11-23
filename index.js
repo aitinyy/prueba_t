@@ -98,11 +98,10 @@ restService.post("/echo", function(req, res) {
         "source": "<webhookpn1>"
         });
       //
-    }else if(req.body.queryResult.parameters.skinconcern){
-      speech = 'la preocupacion es '+req.body.queryResult.parameters.skinconcern;
+    }else if(req.body.queryResult.parameters.skinConcern){
+      speech = 'la preocupacion es ';
 
       return res.json({
-
         "fulfillmentText": speech,
         "fulfillmentMessages": [
           {
@@ -113,7 +112,7 @@ restService.post("/echo", function(req, res) {
         ],  
         "source": "<webhookpn1>"
         });
-      //
+
     }
     else{
       speech = '¿Disculpa?';
