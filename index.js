@@ -100,8 +100,8 @@ restService.post("/echo", function(req, res) {
         "source": "<webhookpn1>"
         });
       //
-    }else if(req.body.queryResult.parameters.limpiar){
-      speech = 'quitamos maquillaje';
+    }else if(req.body.queryResult.parameters.skinconcern){
+      speech = 'la preocupacion es '. req.body.queryResult.parameters.skinconcern;
 
       return res.json({
 
