@@ -66,7 +66,7 @@ restService.post("/echo", function(req, res) {
             "payload": {
               "telegram": {
                 "parse_mode": "Markdown",
-                "text": "hola mira *hola*"
+                "text": speech
               }
             },
             "platform": "TELEGRAM"

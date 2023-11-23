@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Eugenio Chaparro",
+  "author": "Aitana Sempere",
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4"
