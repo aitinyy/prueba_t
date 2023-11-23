@@ -53,20 +53,45 @@ restService.post("/echo", function(req, res) {
         });
     }else if(req.body.queryResult.parameters.removeMakeup){
       var statusWash = req.body.queryResult.parameters.removeMakeup;
-      if(statusWash=='removeMakeup')
-        speech = 'quitamos maquillaje';
-      else
-        speech = 'lavamos la cara';
+      var informationText = '';
+      var buttonCallBack = '';
+      var infoCallBack = '';
+
+      if(statusWash=='removeMakeup'){
+        informationText = 'quitamos maquillaje';
+        buttonCallBack = 'washFace';
+        infoCallBack = 'lavamos cara';
+      }
+      else{
+        informationText = 'lavamos la cara';
+        buttonCallBack = 'skinConcern';
+        infoCallBack = 'que preocupación tienes';
+      }
+
+
+        
 
       return res.json({
-
         "fulfillmentText": '',
         "fulfillmentMessages": [
           {
             "payload": {
-              "telegram": {
+              /*"telegram": {
                 "parse_mode": "Markdown",
                 "text": speech
+              }*/
+              "telegram": {
+                "reply_markup": {
+                  "inline_keyboard": [
+                    [
+                      {
+                        "text": infoCallBack,
+                        "callback_data": buttonCallBack
+                      }
+                    ]
+                  ]
+                },
+                "text": informationText
               }
             },
             "platform": "TELEGRAM"
@@ -107,3 +132,5 @@ restService.post("/echo", function(req, res) {
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
+
+
