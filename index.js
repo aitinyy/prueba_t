@@ -61,15 +61,13 @@ restService.post("/echo", function(req, res) {
         informationText = 'quitamos maquillaje';
         buttonCallBack = 'washFace';
         infoCallBack = 'lavamos cara';
+        
       }
       else{
         informationText = 'lavamos la cara';
         buttonCallBack = 'skinConcern';
         infoCallBack = 'que preocupación tienes';
-      }
-
-
-        
+      } 
 
       return res.json({
         "fulfillmentText": '',
@@ -101,7 +99,7 @@ restService.post("/echo", function(req, res) {
         });
       //
     }else if(req.body.queryResult.parameters.skinconcern){
-      speech = 'la preocupacion es '. req.body.queryResult.parameters.skinconcern;
+      speech = 'la preocupacion es '+req.body.queryResult.parameters.skinconcern;
 
       return res.json({
 
