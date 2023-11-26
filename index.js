@@ -145,7 +145,7 @@ restService.post("/echo", function(req, res) {
                     [
                       {
                         "text": 'si',
-                        "callback_data": 'skinConcern'
+                        "callback_data": 'si'
                       },
                       {
                         "text": 'no',
