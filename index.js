@@ -101,6 +101,38 @@ restService.post("/echo", function(req, res) {
     }else if(req.body.queryResult.parameters.skinConcern){
       speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
 
+      var concern = req.body.queryResult.parameters.skinConcern;
+
+      switch (concern){
+        case 'Acné':
+          speech = 'Producto para acné';
+          break;
+        case 'Manchas en la piel':
+          speech = 'Producto para las manchas';
+          break;
+        case 'Arrugas':
+          speech = 'Producto para las arrugas';
+          break;
+        case 'Poros':
+          speech = 'Producto para los poros';
+          break;
+        case 'Piel sensible':
+          speech = 'Producto para la piel sensible';
+          break;
+        case 'Piel muy seca':
+          speech = 'Producto para la piel muy seca';
+          break;
+        case 'Piel grasa':
+          speech = 'Producto para la piel grasa';
+          break;
+        case 'Textura en la piel':
+          speech = 'Producto para la textura en la piel';
+          break;
+        default:
+          speech = '¿Disculpa?';
+          break;
+      }
+
       return res.json({
         "fulfillmentText": speech,
         "fulfillmentMessages": [
