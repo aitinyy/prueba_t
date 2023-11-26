@@ -102,7 +102,7 @@ restService.post("/echo", function(req, res) {
       speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
 
       var concern = req.body.queryResult.parameters.skinConcern;
-      var moreConcern = '¿Tienes alguna preocupación más?';
+      var moreConcern = ' ¿Tienes alguna preocupación más?';
 
       switch (concern){
         case 'Acné':
@@ -140,10 +140,6 @@ restService.post("/echo", function(req, res) {
           {
             "payload": {
               "telegram": {
-                "text": speech,
-                "parse_mode": "Markdown"
-              },
-              "telegram": {
                 "reply_markup": {
                   "inline_keyboard": [
                     [
@@ -158,7 +154,7 @@ restService.post("/echo", function(req, res) {
                     ]
                   ]
                 },
-                "text": moreConcern,
+                "text": speech+moreConcern,
               }
               
             },
