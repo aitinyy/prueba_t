@@ -164,6 +164,26 @@ restService.post("/echo", function(req, res) {
         "source": "<webhookpn1>"
         });
 
+    }else if(req.body.queryResult.parameters.moreConcern){
+
+      speech = 'Más preocupaciones';
+      var evento = 'SKIN_CONCERN';
+
+      return res.json({
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],
+        "followupEventInput": {
+            "name": evento,
+            "languageCode": "es-ES"
+        },
+        "source": "<webhookpn1>"
+      });
     }
     else{
       speech = '¿Disculpa?';
