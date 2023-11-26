@@ -178,10 +178,10 @@ restService.post("/echo", function(req, res) {
             }
           }
         ],
-        /*"followupEventInput": {
+        "followupEventInput": {
             "name": evento,
             "languageCode": "es-ES"
-        },*/
+        },
         "source": "<webhookpn1>"
       });
     }
