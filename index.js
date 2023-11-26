@@ -138,13 +138,11 @@ restService.post("/echo", function(req, res) {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
           {
-            "payload":{
-              "telegram": {
-                "parse_mode": "Markdown",
-                "text": speech
-              }
-            },
             "payload": {
+              "telegram": {
+                "text": speech,
+                "parse_mode": "Markdown"
+              },
               "telegram": {
                 "reply_markup": {
                   "inline_keyboard": [
@@ -160,8 +158,9 @@ restService.post("/echo", function(req, res) {
                     ]
                   ]
                 },
-                "text": moreConcern
+                "text": moreConcern,
               }
+              
             },
             "platform": "TELEGRAM"
           }
