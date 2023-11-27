@@ -227,15 +227,33 @@ restService.post("/echo", function(req, res) {
         "source": "<webhookpn1>"
       });
     }else if(req.body.queryResult.parameters.ingredients){
-      speech = 'Explicamos que es '+req.body.queryResult.parameters.ingredients;
-
+      speech = 'Explicamos que es '+req.body.queryResult.parameters.ingredients+'. ';
+      speech += '¿Te interesa conocer algún ingrediente más?';
       return res.json({
         "fulfillmentText": speech,
         "fulfillmentMessages": [
           {
-            "text": {
-              "text": [speech]
-            }
+            "payload": {
+              "telegram": {
+                "reply_markup": {
+                  "inline_keyboard": [
+                    [
+                      {
+                        "text": 'Si',
+                        "callback_data": 'ingredientes'
+                      },
+                      {
+                        "text": 'No',
+                        "callback_data": 'no'
+                      }
+                    ]
+                  ]
+                },
+                "text": speech,
+              }
+              
+            },
+            "platform": "TELEGRAM"
           }
         ],
         "source": "<webhookpn1>"
