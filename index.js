@@ -191,23 +191,9 @@ restService.post("/echo", function(req, res) {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
           {
-            "payload": {
-              "telegram": {
-                "reply_markup": {
-                  "inline_keyboard": [
-                    [
-                      {
-                        "text": 'Crema solar',
-                        "callback_data": 'addSunscreen'
-                      }
-                    ]
-                  ]
-                },
-                "text": speech,
-              }
-              
-            },
-            "platform": "TELEGRAM"
+            "text": {
+              "text": [speech]
+            }
           }
         ],
         "source": "<webhookpn1>"
