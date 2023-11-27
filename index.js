@@ -191,20 +191,6 @@ restService.post("/echo", function(req, res) {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
           {
-            "text": {
-              "text": [speech]
-            }
-          }
-        ],
-        "source": "<webhookpn1>"
-      });
-    }else if(req.body.queryResult.parameters.addSunscreen){
-      speech = 'Crema solar final';
-
-      return res.json({
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
             "payload": {
               "telegram": {
                 "reply_markup": {
@@ -222,6 +208,20 @@ restService.post("/echo", function(req, res) {
               
             },
             "platform": "TELEGRAM"
+          }
+        ],
+        "source": "<webhookpn1>"
+      });
+    }else if(req.body.queryResult.parameters.addSunscreen){
+      speech = 'Crema solar final';
+
+      return res.json({
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
           }
         ],
         "source": "<webhookpn1>"
