@@ -226,6 +226,20 @@ restService.post("/echo", function(req, res) {
         ],
         "source": "<webhookpn1>"
       });
+    }else if(req.body.queryResult.parameters.ingredients){
+      speech = 'Explicamos que es '+req.body.queryResult.parameters.ingredients;
+
+      return res.json({
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],
+        "source": "<webhookpn1>"
+      });
     }
     else{
       speech = '¿Disculpa?';
