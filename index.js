@@ -191,9 +191,51 @@ restService.post("/echo", function(req, res) {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
           {
-            "text": {
-              "text": [speech]
-            }
+            "payload": {
+              "telegram": {
+                "reply_markup": {
+                  "inline_keyboard": [
+                    [
+                      {
+                        "text": 'Crema solar',
+                        "callback_data": 'addSunscreen'
+                      }
+                    ]
+                  ]
+                },
+                "text": speech,
+              }
+              
+            },
+            "platform": "TELEGRAM"
+          }
+        ],
+        "source": "<webhookpn1>"
+      });
+    }else if(req.body.queryResult.parameters.addSunscreen){
+      speech = 'Crema solar final';
+
+      return res.json({
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "payload": {
+              "telegram": {
+                "reply_markup": {
+                  "inline_keyboard": [
+                    [
+                      {
+                        "text": 'Crema solar',
+                        "callback_data": 'addSunscreen'
+                      }
+                    ]
+                  ]
+                },
+                "text": speech,
+              }
+              
+            },
+            "platform": "TELEGRAM"
           }
         ],
         "source": "<webhookpn1>"
