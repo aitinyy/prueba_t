@@ -184,6 +184,20 @@ restService.post("/echo", function(req, res) {
         },
         "source": "<webhookpn1>"
       });
+    }else if(req.body.queryResult.parameters.decideMoisturizer){
+      speech = 'Seleccionamos tipo de moisturizer';
+
+      return res.json({
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],
+        "source": "<webhookpn1>"
+      });
     }
     else{
       speech = '¿Disculpa?';
