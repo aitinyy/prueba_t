@@ -6,6 +6,7 @@ const restService = express();
 
 var multipleConcerns = 0;
 var concerns = [];
+
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -149,7 +150,7 @@ restService.post("/echo", function(req, res) {
         multipleConcerns = multipleConcerns +1;
         concerns.push(concern);
       }else{
-        speech = 'Esta preocupación ya la has dicho.'
+        speech = 'Esta preocupación ya la has dicho.';
       }
 
       return res.json({
