@@ -261,33 +261,35 @@ restService.post("/echo", function(req, res) {
     }
 
   }
+
+  function startRoutine(){
+    speech = 'Vamos a empezar tu rutina.';
+    evento = "CLEANSER_START";
+        
+    return res.json({
+        "fulfillmentText": speech,
+        "fulfillmentMessages": [
+          {
+            "text": {
+              "text": [speech]
+            }
+          }
+        ],
+        "followupEventInput": {
+            "name": evento,
+            "languageCode": "es-ES"
+            /*"parameters": {
+              "param-name": "param-value"
+            }*/
+        },
+        "source": "<webhookpn1>"
+      });
+  }
 });
 
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
 
-function startRoutine(){
-  speech = 'Vamos a empezar tu rutina.';
-  evento = "CLEANSER_START";
-      
-  return res.json({
-      "fulfillmentText": speech,
-      "fulfillmentMessages": [
-        {
-          "text": {
-            "text": [speech]
-          }
-        }
-      ],
-      "followupEventInput": {
-          "name": evento,
-          "languageCode": "es-ES"
-          /*"parameters": {
-            "param-name": "param-value"
-          }*/
-      },
-      "source": "<webhookpn1>"
-    });
-}
+
 
