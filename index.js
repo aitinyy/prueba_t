@@ -38,104 +38,21 @@ restService.post("/echo", function(req, res) {
       //precupaciones del usuario
       selectConcerns();
     }else if(req.body.queryResult.parameters.moreConcern){
-
-      speech = 'Más preocupaciones';
-      var evento = 'SKIN_CONCERN';
-
-      return res.json({
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
-            "text": {
-              "text": [speech]
-            }
-          }
-        ],
-        "followupEventInput": {
-            "name": evento,
-            "languageCode": "es-ES"
-        },
-        "source": "<webhookpn1>"
-      });
+      //continuacion para mas concerns
+      moreConcerns();
     }else if(req.body.queryResult.parameters.decideMoisturizer){
-      speech = 'Seleccionamos tipo de moisturizer';
-
-      return res.json({
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
-            "payload": {
-              "telegram": {
-                "reply_markup": {
-                  "inline_keyboard": [
-                    [
-                      {
-                        "text": 'Crema solar',
-                        "callback_data": 'addSunscreen'
-                      }
-                    ]
-                  ]
-                },
-                "text": speech,
-              }
-              
-            },
-            "platform": "TELEGRAM"
-          }
-        ],
-        "source": "<webhookpn1>"
-      });
+      //decide crema hisdratante
+      decideMoisturizer();
     }else if(req.body.queryResult.parameters.addSunscreen){
-      speech = 'Crema solar final';
-
-      return res.json({
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
-            "text": {
-              "text": [speech]
-            }
-          }
-        ],
-        "source": "<webhookpn1>"
-      });
+      //crema solar
+      selectSunscreen();
     }else if(req.body.queryResult.parameters.ingredients){
-      speech = 'Explicamos que es '+req.body.queryResult.parameters.ingredients+'. ';
-      speech += '¿Te interesa conocer algún ingrediente más?';
-      return res.json({
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
-            "payload": {
-              "telegram": {
-                "reply_markup": {
-                  "inline_keyboard": [
-                    [
-                      {
-                        "text": 'Si',
-                        "callback_data": 'ingredientes'
-                      },
-                      {
-                        "text": 'No',
-                        "callback_data": 'no'
-                      }
-                    ]
-                  ]
-                },
-                "text": speech,
-              }
-              
-            },
-            "platform": "TELEGRAM"
-          }
-        ],
-        "source": "<webhookpn1>"
-      });
+      //zona de ingredientes
+      manageIngredientsSection();
     }
     else{
       speech = '¿Disculpa?';
     }
-
   }
 
   function startRoutine(){
@@ -296,6 +213,118 @@ restService.post("/echo", function(req, res) {
     }
 
     return speech;
+  }
+
+  function moreConcerns(){
+
+    speech = 'Más preocupaciones';
+    var evento = 'SKIN_CONCERN';
+
+    return res.json({
+      "fulfillmentText": speech,
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [speech]
+          }
+        }
+      ],
+      "followupEventInput": {
+          "name": evento,
+          "languageCode": "es-ES"
+      },
+      "source": "<webhookpn1>"
+    });
+
+  }
+
+  function decideMoisturizer(){
+
+    speech = 'Seleccionamos tipo de moisturizer';
+
+    //gestionar
+
+    return res.json({
+      "fulfillmentText": speech,
+      "fulfillmentMessages": [
+        {
+          "payload": {
+            "telegram": {
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": 'Crema solar',
+                      "callback_data": 'addSunscreen'
+                    }
+                  ]
+                ]
+              },
+              "text": speech,
+            }
+            
+          },
+          "platform": "TELEGRAM"
+        }
+      ],
+      "source": "<webhookpn1>"
+    });
+
+  }
+
+  function selectSunscreen(){
+
+    speech = 'Crema solar final';
+
+    return res.json({
+      "fulfillmentText": speech,
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [speech]
+          }
+        }
+      ],
+      "source": "<webhookpn1>"
+    });
+
+  }
+
+  function manageIngredientsSection(){
+
+    speech = 'Explicamos que es '+req.body.queryResult.parameters.ingredients+'. ';
+    speech += '¿Te interesa conocer algún ingrediente más?';
+
+    return res.json({
+      "fulfillmentText": speech,
+      "fulfillmentMessages": [
+        {
+          "payload": {
+            "telegram": {
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": 'Si',
+                      "callback_data": 'ingredientes'
+                    },
+                    {
+                      "text": 'No',
+                      "callback_data": 'no'
+                    }
+                  ]
+                ]
+              },
+              "text": speech,
+            }
+            
+          },
+          "platform": "TELEGRAM"
+        }
+      ],
+      "source": "<webhookpn1>"
+    });
+
   }
 
 });
