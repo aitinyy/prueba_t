@@ -24,35 +24,13 @@ restService.post("/echo", function(req, res) {
       : "Seems like some problem. Speak again."+req.body;
       */
 
-  var speech = 'Hola';
+  var speech = '';
   var evento = '';
 
   if(req.body.queryResult && req.body.queryResult.parameters){
     if(req.body.queryResult.parameters.startRoutine){
       //empezamos la rutina
-      speech = 'Vamos a empezar tu rutina.';
-      evento = "CLEANSER_START";
-      return res.json({
-
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
-            "text": {
-              "text": [speech]
-            }
-          }
-        ],
-        "followupEventInput": {
-            "name": evento,
-            "languageCode": "es-ES"
-            /*"parameters": {
-              "param-name": "param-value"
-            }*/
-        },
-        "source": "<webhookpn1>"
-      
-      
-        });
+      startRoutine();
     }else if(req.body.queryResult.parameters.removeMakeup){
       var statusWash = req.body.queryResult.parameters.removeMakeup;
       var informationText = '';
@@ -283,14 +261,33 @@ restService.post("/echo", function(req, res) {
     }
 
   }
-
-
 });
-
-
 
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
 
+function startRoutine(){
+  speech = 'Vamos a empezar tu rutina.';
+  evento = "CLEANSER_START";
+      
+  return res.json({
+      "fulfillmentText": speech,
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [speech]
+          }
+        }
+      ],
+      "followupEventInput": {
+          "name": evento,
+          "languageCode": "es-ES"
+          /*"parameters": {
+            "param-name": "param-value"
+          }*/
+      },
+      "source": "<webhookpn1>"
+    });
+}
 
