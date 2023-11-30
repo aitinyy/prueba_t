@@ -32,52 +32,7 @@ restService.post("/echo", function(req, res) {
       //empezamos la rutina
       startRoutine();
     }else if(req.body.queryResult.parameters.removeMakeup){
-      var statusWash = req.body.queryResult.parameters.removeMakeup;
-      var informationText = '';
-      var buttonCallBack = '';
-      var infoCallBack = '';
-
-      if(statusWash=='removeMakeup'){
-        informationText = 'quitamos maquillaje';
-        buttonCallBack = 'washFace';
-        infoCallBack = 'lavamos cara';
-        
-      }
-      else{
-        informationText = 'lavamos la cara';
-        buttonCallBack = 'skinConcern';
-        infoCallBack = 'que preocupación tienes';
-      } 
-
-      return res.json({
-        "fulfillmentText": '',
-        "fulfillmentMessages": [
-          {
-            "payload": {
-              /*"telegram": {
-                "parse_mode": "Markdown",
-                "text": speech
-              }*/
-              "telegram": {
-                "reply_markup": {
-                  "inline_keyboard": [
-                    [
-                      {
-                        "text": infoCallBack,
-                        "callback_data": buttonCallBack
-                      }
-                    ]
-                  ]
-                },
-                "text": informationText
-              }
-            },
-            "platform": "TELEGRAM"
-          }
-        ],
-        "source": "<webhookpn1>"
-        });
-      //
+      washFace();
     }else if(req.body.queryResult.parameters.skinConcern){
       speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
       
@@ -283,8 +238,53 @@ restService.post("/echo", function(req, res) {
             }*/
         },
         "source": "<webhookpn1>"
-      });
+    });
   }
+
+  function washFace(){
+    var statusWash = req.body.queryResult.parameters.removeMakeup;
+    var informationText = '';
+    var buttonCallBack = '';
+    var infoCallBack = '';
+
+    if(statusWash=='removeMakeup'){
+      informationText = 'quitamos maquillaje';
+      buttonCallBack = 'washFace';
+      infoCallBack = 'lavamos cara';
+      
+    }
+    else{
+      informationText = 'lavamos la cara';
+      buttonCallBack = 'skinConcern';
+      infoCallBack = 'que preocupación tienes';
+    } 
+
+    return res.json({
+      "fulfillmentText": '',
+      "fulfillmentMessages": [
+        {
+          "payload": {
+            "telegram": {
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": infoCallBack,
+                      "callback_data": buttonCallBack
+                    }
+                  ]
+                ]
+              },
+              "text": informationText
+            }
+          },
+          "platform": "TELEGRAM"
+        }
+      ],
+      "source": "<webhookpn1>"
+    });
+  }
+
 });
 
 restService.listen(process.env.PORT || 8000, function() {
@@ -293,3 +293,31 @@ restService.listen(process.env.PORT || 8000, function() {
 
 
 
+/*return res.json({
+  "fulfillmentText": '',
+  "fulfillmentMessages": [
+    {
+      "payload": {
+        "telegram": {
+          "parse_mode": "Markdown",
+          "text": speech
+        }
+        "telegram": {
+          "reply_markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": infoCallBack,
+                  "callback_data": buttonCallBack
+                }
+              ]
+            ]
+          },
+          "text": informationText
+        }
+      },
+      "platform": "TELEGRAM"
+    }
+  ],
+  "source": "<webhookpn1>"
+});*/
