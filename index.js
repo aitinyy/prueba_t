@@ -2,8 +2,9 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-
 const restService = express();
+
+var multipleConcerns = 0;
 
 restService.use(
   bodyParser.urlencoded({
@@ -100,9 +101,10 @@ restService.post("/echo", function(req, res) {
       //
     }else if(req.body.queryResult.parameters.skinConcern){
       speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
-
+      
       var concern = req.body.queryResult.parameters.skinConcern;
       var moreConcern = ' ¿Tienes alguna preocupación más?';
+      var moreThanOne = ' Ten cuidado al tratar varios productos, primero por separado.';
 
       switch (concern){
         case 'Acné':
@@ -134,6 +136,11 @@ restService.post("/echo", function(req, res) {
           break;
       }
 
+      if(multipleConcerns>0){
+        speech +=moreThanOne; 
+      }
+
+      multipleConcerns = multipleConcerns +1;
       return res.json({
         "fulfillmentText": speech,
         "fulfillmentMessages": [
