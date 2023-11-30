@@ -32,90 +32,11 @@ restService.post("/echo", function(req, res) {
       //empezamos la rutina
       startRoutine();
     }else if(req.body.queryResult.parameters.removeMakeup){
+      //doble wash
       washFace();
     }else if(req.body.queryResult.parameters.skinConcern){
-      speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
-      
-      var concern = req.body.queryResult.parameters.skinConcern;
-      var moreConcern = ' ¿Tienes alguna preocupación más?';
-      var moreThanOne = ' Ten cuidado al tratar varios productos, primero por separado.';
-      var alreadyDone = false;
-
-      switch (concern){
-        case 'Acné':
-          speech = 'Producto para acné';
-          break;
-        case 'Manchas en la piel':
-          speech = 'Producto para las manchas';
-          break;
-        case 'Arrugas':
-          speech = 'Producto para las arrugas';
-          break;
-        case 'Poros':
-          speech = 'Producto para los poros';
-          break;
-        case 'Piel sensible':
-          speech = 'Producto para la piel sensible';
-          break;
-        case 'Piel muy seca':
-          speech = 'Producto para la piel muy seca';
-          break;
-        case 'Piel grasa':
-          speech = 'Producto para la piel grasa';
-          break;
-        case 'Textura en la piel':
-          speech = 'Producto para la textura en la piel';
-          break;
-        default:
-          speech = '¿Disculpa?';
-          break;
-      }
-
-      concerns.forEach(element => {
-        if(element==concern)
-          alreadyDone = true;
-      });
-
-      if(!alreadyDone){
-        if(multipleConcerns>0){
-          speech +=moreThanOne; 
-        }
-        multipleConcerns = multipleConcerns +1;
-        concerns.push(concern);
-      }else{
-        speech = 'Esta preocupación ya la has dicho.';
-      }
-
-      return res.json({
-        "fulfillmentText": speech,
-        "fulfillmentMessages": [
-          {
-            "payload": {
-              "telegram": {
-                "reply_markup": {
-                  "inline_keyboard": [
-                    [
-                      {
-                        "text": 'si',
-                        "callback_data": 'si'
-                      },
-                      {
-                        "text": 'no',
-                        "callback_data": 'no'
-                      },
-                    ]
-                  ]
-                },
-                "text": speech+moreConcern,
-              }
-              
-            },
-            "platform": "TELEGRAM"
-          }
-        ],  
-        "source": "<webhookpn1>"
-        });
-
+      //precupaciones del usuario
+      selectConcerns();
     }else if(req.body.queryResult.parameters.moreConcern){
 
       speech = 'Más preocupaciones';
@@ -283,6 +204,98 @@ restService.post("/echo", function(req, res) {
       ],
       "source": "<webhookpn1>"
     });
+  }
+
+  function selectConcerns(){
+    //speech = 'la preocupacion es '+req.body.queryResult.parameters.skinConcern;
+      
+    var concern = req.body.queryResult.parameters.skinConcern;
+    var moreConcern = ' ¿Tienes alguna preocupación más?';
+    var moreThanOne = ' Ten cuidado al tratar varios productos, primero por separado.';
+    var alreadyDone = false;
+
+    speech = adjustConcern(concern);
+
+    concerns.forEach(element => {
+      if(element==concern)
+        alreadyDone = true;
+    });
+
+    if(!alreadyDone){
+      if(multipleConcerns>0){
+        speech +=moreThanOne; 
+      }
+      multipleConcerns = multipleConcerns +1;
+      concerns.push(concern);
+    }else{
+      speech = 'Esta preocupación ya la has dicho.';
+    }
+
+    return res.json({
+      "fulfillmentText": speech,
+      "fulfillmentMessages": [
+        {
+          "payload": {
+            "telegram": {
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": 'si',
+                      "callback_data": 'si'
+                    },
+                    {
+                      "text": 'no',
+                      "callback_data": 'no'
+                    },
+                  ]
+                ]
+              },
+              "text": speech+moreConcern,
+            }
+            
+          },
+          "platform": "TELEGRAM"
+        }
+      ],  
+      "source": "<webhookpn1>"
+      });
+  }
+
+  function adjustConcern(concern){
+    var speech = '';
+
+    switch (concern){
+      case 'Acné':
+        speech = 'Producto para acné';
+        break;
+      case 'Manchas en la piel':
+        speech = 'Producto para las manchas';
+        break;
+      case 'Arrugas':
+        speech = 'Producto para las arrugas';
+        break;
+      case 'Poros':
+        speech = 'Producto para los poros';
+        break;
+      case 'Piel sensible':
+        speech = 'Producto para la piel sensible';
+        break;
+      case 'Piel muy seca':
+        speech = 'Producto para la piel muy seca';
+        break;
+      case 'Piel grasa':
+        speech = 'Producto para la piel grasa';
+        break;
+      case 'Textura en la piel':
+        speech = 'Producto para la textura en la piel';
+        break;
+      default:
+        speech = '¿Disculpa?';
+        break;
+    }
+
+    return speech;
   }
 
 });
