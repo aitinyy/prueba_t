@@ -6,6 +6,12 @@ const restService = express();
 
 var multipleConcerns = 0;
 var concerns = [];
+var typeSkin = 0;
+//0 -> not set
+//1 -> mostly normal
+//2 -> mostly dry
+//3 -> mostly oily
+//4 -> mostly sensitive
 
 restService.use(
   bodyParser.urlencoded({
@@ -37,6 +43,7 @@ restService.post("/echo", function(req, res) {
     }else if(req.body.queryResult.parameters.skinConcern){
       //precupaciones del usuario
       selectConcerns();
+      updateSkinType();
     }else if(req.body.queryResult.parameters.moreConcern){
       //continuacion para mas concerns
       moreConcerns();
@@ -238,11 +245,80 @@ restService.post("/echo", function(req, res) {
 
   }
 
+  function updateSkinType(){
+    //0 -> not set
+    //1 -> mostly normal
+    //2 -> mostly dry
+    //3 -> mostly oily
+    //4 -> mostly sensitive
+    var sensitive = false;
+    var auxType = 0;
+
+    concerns.forEach(element => {
+      switch(element){
+        case 'Piel muy seca':
+          typeSkin = 2;
+          break;
+        case 'Piel grasa':
+          typeSkin = 3;
+          break;
+        case 'Piel sensible':
+          typeSkin = 4;
+          sensitive = true;
+          break;
+        default:
+          typeSkin = 1;
+          break;
+      }
+    });
+
+    if(sensitive)
+      typeSkin=4;
+
+    concerns.forEach(element => {
+      switch(element){
+        case 'Acné':
+        case 'Poros':
+        case 'Textura en la piel':
+          if(auxType<=3)
+            auxType=3;
+          break;
+        case 'Manchas en la piel':
+          auxType=4;
+          break;
+        case 'Arrugas':
+          if(auxType<=2)
+            auxType=2;
+          break;
+      }
+    });
+
+    if(typeSkin<auxType)
+      typeSkin=auxType;
+
+  }
+
   function decideMoisturizer(){
 
     speech = 'Seleccionamos tipo de moisturizer';
 
-    //gestionar
+    switch(typeSkin){
+      case 1:
+        speech = 'Crema hidratante para piel normal';
+        break;
+      case 2:
+        speech = 'Crema hidratante para piel seca';
+        break;
+      case 3:
+        speech = 'Crema hidratante para piel grasa';
+        break;
+      case 4:
+        speech = 'Crema hidratante para piel sensible';
+        break;
+      default:
+        speech = 'Crema hidratante para piel default';
+        break;
+    }
 
     return res.json({
       "fulfillmentText": speech,
