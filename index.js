@@ -36,6 +36,7 @@ restService.post("/echo", function(req, res) {
   if(req.body.queryResult && req.body.queryResult.parameters){
     if(req.body.queryResult.parameters.startRoutine){
       //empezamos la rutina
+      resetValues();
       startRoutine();
     }else if(req.body.queryResult.parameters.removeMakeup){
       //doble wash
@@ -60,6 +61,14 @@ restService.post("/echo", function(req, res) {
     else{
       speech = '¿Disculpa?';
     }
+  }
+
+  function resetValues(){
+    while(concerns.length){
+      concerns.pop();
+    }
+    multipleConcerns=0;
+    typeSkin=0;
   }
 
   function startRoutine(){
@@ -351,6 +360,24 @@ restService.post("/echo", function(req, res) {
   function selectSunscreen(){
 
     speech = 'Crema solar final';
+
+    switch(typeSkin){
+      case 1:
+        speech = 'Crema solar para piel normal';
+        break;
+      case 2:
+        speech = 'Crema solar para piel seca';
+        break;
+      case 3:
+        speech = 'Crema solar para piel grasa';
+        break;
+      case 4:
+        speech = 'Crema solar para piel sensible';
+        break;
+      default:
+        speech = 'Crema solar para piel default';
+        break;
+    }
 
     return res.json({
       "fulfillmentText": speech,
